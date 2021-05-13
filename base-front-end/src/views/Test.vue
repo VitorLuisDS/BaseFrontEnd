@@ -18,7 +18,7 @@
   </table>
 </template>
 <script lang="ts">
-import { defineComponent, onMounted } from "vue";
+import { defineComponent } from "vue";
 import { usersRepository } from "@/views/compositions/users-repository";
 import { User } from "@/models/User";
 
