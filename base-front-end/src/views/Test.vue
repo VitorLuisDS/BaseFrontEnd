@@ -4,6 +4,7 @@
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
+import { commonMethods } from "@/views/compositions/Test";
 interface Hello {
   text: string;
 
@@ -36,6 +37,7 @@ export default defineComponent({
       setTimeout(() => {
         this.label = new HelloClass(text);
         this.label.log(text);
+        commonMethods.someMethod();
       }, 1000);
     },
   },
