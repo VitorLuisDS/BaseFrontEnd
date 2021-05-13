@@ -1,48 +1,45 @@
 <template>
   <h1>This is a test page</h1>
-  <h4>{{ label.text }}</h4>
+  <button @click="createUserPage()">Crate New User</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Id</th>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(user, index) in users" :key="{ index }">
+        <td>{{ user.id }}</td>
+        <td>{{ user.name }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 <script lang="ts">
 import { defineComponent } from "vue";
-import { commonMethods } from "@/views/compositions/Test";
-interface Hello {
-  text: string;
+import { usersRepository } from "@/views/compositions/users-repository";
+import { User } from "@/models/User";
 
-  log(params: string): void;
-}
-
-class HelloClass implements Hello {
-  text: string;
-
-  log(params: string) {
-    console.log(params);
-  }
-
-  constructor(params: string) {
-    this.text = params;
-  }
-}
 export default defineComponent({
   setup() {
-    console.log("-setup-");
+    // const users = ref<User[]>();
+    // const getUsers = () => {
+    //   users.value = usersRepository.getUsers();
+    // };
+
+    // onMounted(getUsers);
+
+    return { ...usersRepository() };
   },
   data() {
-    return {
-      label: {} as HelloClass,
-    };
+    return {};
   },
   name: "Test",
   methods: {
-    hello(text: string) {
-      setTimeout(() => {
-        this.label = new HelloClass(text);
-        this.label.log(text);
-        commonMethods.someMethod();
-      }, 1000);
+    createUserPage() {
+      this.createUser(new User(Math.floor(Math.random() * 100), "Vitor"));
     },
-  },
-  mounted() {
-    this.hello("Introduction to Vue 3 + Composition Api + Typescript");
   },
 });
 </script>
