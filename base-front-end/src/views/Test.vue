@@ -7,20 +7,27 @@ import { defineComponent } from "vue";
 interface Hello {
   text: string;
 }
+
+class HelloClass implements Hello {
+  text: string;
+  constructor(params: string) {
+    this.text = params;
+  }
+}
 export default defineComponent({
   setup() {
     console.log("-setup-");
   },
   data() {
     return {
-      label: {} as Hello,
+      label: {} as HelloClass,
     };
   },
   name: "Test",
   methods: {
     hello(text: string) {
       setTimeout(() => {
-        this.label.text = text;
+        this.label = new HelloClass(text);
       }, 1000);
     },
   },
