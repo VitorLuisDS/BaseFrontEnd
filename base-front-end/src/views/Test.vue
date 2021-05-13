@@ -1,7 +1,11 @@
 <template>
   <h1>This is a test page</h1>
-  <button @click="createUserClick()">Crate New User</button>
+
   <button @click="initializeUsersClick()">Initialize Users</button>
+  <input v-model="id" type="number" placeholder="Id" />
+  <input v-model="name" type="text" placeholder="Name" />
+  <button @click="createUserClick()">Crate New User</button>
+
   <table>
     <thead>
       <tr>
@@ -27,12 +31,12 @@ export default defineComponent({
     return { ...usersRepository(true) };
   },
   data() {
-    return {};
+    return { id: 0, name: "" };
   },
   name: "Test",
   methods: {
     createUserClick() {
-      this.createUser(new User(Math.floor(Math.random() * 100), "Vitor"));
+      this.createUser(new User(this.id, this.name));
     },
     initializeUsersClick() {
       this.initializeUsers();
