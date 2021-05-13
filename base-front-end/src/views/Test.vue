@@ -6,10 +6,17 @@
 import { defineComponent } from "vue";
 interface Hello {
   text: string;
+
+  log(params: string): void;
 }
 
 class HelloClass implements Hello {
   text: string;
+
+  log(params: string) {
+    console.log(params);
+  }
+
   constructor(params: string) {
     this.text = params;
   }
@@ -28,6 +35,7 @@ export default defineComponent({
     hello(text: string) {
       setTimeout(() => {
         this.label = new HelloClass(text);
+        this.label.log(text);
       }, 1000);
     },
   },
