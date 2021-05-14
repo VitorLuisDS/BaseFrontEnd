@@ -20,6 +20,18 @@
       </tr>
     </tbody>
   </table>
+  <table>
+    <thead>
+      <tr>
+        <th>Name</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr v-for="(page, index) in pagesStore" :key="{ index }">
+        <td>{{ page.name }}</td>
+      </tr>
+    </tbody>
+  </table>
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
@@ -33,11 +45,13 @@ export default defineComponent({
 
     onMounted(() => {
       store.dispatch("userModule/initializeUsers");
+      store.dispatch("pageModule/initializePages");
     });
 
     return {
       ...usersRepository(true),
       usersStore: computed(() => store.getters["userModule/getUsers"]),
+      pagesStore: computed(() => store.getters["pageModule/getPages"]),
     };
   },
   data() {
