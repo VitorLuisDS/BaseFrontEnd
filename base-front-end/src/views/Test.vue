@@ -14,7 +14,7 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(user, index) in users" :key="{ index }">
+      <tr v-for="(user, index) in usersStore" :key="{ index }">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
       </tr>
@@ -22,13 +22,23 @@
   </table>
 </template>
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent, onMounted } from "vue";
 import { usersRepository } from "@/views/compositions/users-repository";
 import { User } from "@/models/User";
+import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    return { ...usersRepository(true) };
+    const store = useStore();
+
+    onMounted(() => {
+      store.dispatch("userModule/initializeUsers");
+    });
+
+    return {
+      ...usersRepository(true),
+      usersStore: computed(() => store.getters["userModule/getUsers"]),
+    };
   },
   data() {
     return { id: 0, name: "" };
