@@ -1,11 +1,11 @@
 import { User } from "@/models/User";
 import { Module } from "vuex";
-
-interface UserState {
+import { State } from "@/store/State"
+interface UserState extends State {
     users: User[]
 }
 
-const usersModule: Module<UserState, UserState> = {
+const usersModule: Module<UserState, State> = {
     state: {
         users: []
     },

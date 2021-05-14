@@ -1,3 +1,3 @@
-export interface State<T> {
+export interface State {
 
 };
