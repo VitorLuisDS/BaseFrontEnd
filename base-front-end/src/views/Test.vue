@@ -48,8 +48,9 @@ export default defineComponent({
       store.dispatch("pageModule/initializePages");
     });
 
-    const createUser = (user: User) => store.commit("userModule/addUser", user);
-    const initializeUsers = () => store.commit("userModule/initializeUsers");
+    const createUser = (user: User) =>
+      store.dispatch("userModule/addUser", user);
+    const initializeUsers = () => store.dispatch("userModule/initializeUsers");
 
     return {
       // ...usersRepository(true),
@@ -64,11 +65,11 @@ export default defineComponent({
   },
   name: "Test",
   methods: {
-    createUserClick() {
-      this.createUser(new User(this.id, this.name));
+    async createUserClick() {
+      await this.createUser(new User(this.id, this.name));
     },
-    initializeUsersClick() {
-      this.initializeUsers();
+    async initializeUsersClick() {
+      await this.initializeUsers();
     },
   },
 });
