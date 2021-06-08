@@ -1,22 +1,22 @@
-import { User } from "@/models/User"
-import { ref, onMounted } from "vue"
+import { User } from "@/models/User";
+import { Store } from "vuex";
 
-export const usersRepository = (initializeOnMounted?: boolean) => {
-    const users = ref<User[]>([]);
+export const usersRepository = (store: Store<any>) => {
+    const initializeUsers = async (): Promise<void> => {
+        await store.dispatch("userModule/initializeUsers");
+    };
 
-    const initializeUsers = () => {
-        users.value = [
-            new User(Math.floor(Math.random() * 100), 'Admin'),
-            new User(Math.floor(Math.random() * 100), 'CEO'),
-            new User(Math.floor(Math.random() * 100), 'Developer')
-        ];
-    }
-    if (initializeOnMounted)
-        onMounted(initializeUsers);
+    const createUser = async (user: User): Promise<void> => {
+        await store.dispatch("userModule/addUser", user);
+    };
 
-    const createUser = (user: User) => {
-        users.value.push(user);
-    }
+    const getUsers = (): User[] => {
+        return store.getters["userModule/getUsers"];
+    };
 
-    return { initializeUsers, createUser, users };
-}
+    return {
+        initializeUsers,
+        createUser,
+        getUsers
+    };
+};

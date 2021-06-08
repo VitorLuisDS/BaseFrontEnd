@@ -1,4 +1,6 @@
 <template>
+  <h4>(Test Component)</h4>
+  <h1>&darr;</h1>
   <h1>This is a test page</h1>
 
   <button @click="initializeUsersClick()">Initialize Users</button>
@@ -14,50 +16,32 @@
       </tr>
     </thead>
     <tbody>
-      <tr v-for="(user, index) in usersStore" :key="{ index }">
+      <tr v-for="(user, index) in users" :key="{ index }">
         <td>{{ user.id }}</td>
         <td>{{ user.name }}</td>
       </tr>
     </tbody>
   </table>
-  <table>
-    <thead>
-      <tr>
-        <th>Name</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr v-for="(page, index) in pagesStore" :key="{ index }">
-        <td>{{ page.name }}</td>
-      </tr>
-    </tbody>
-  </table>
+  <PagesTable />
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
-// import { usersRepository } from "@/views/compositions/users-repository";
+import { usersRepository } from "@/views/compositions/users-repository";
 import { User } from "@/models/User";
 import { useStore } from "vuex";
+import PagesTable from "@/components/PagesTable.vue";
 
 export default defineComponent({
   setup() {
     const store = useStore();
 
-    onMounted(() => {
-      store.dispatch("userModule/initializeUsers");
-      store.dispatch("pageModule/initializePages");
+    onMounted(async () => {
+      await usersRepository(store).initializeUsers();
     });
 
-    const createUser = (user: User) =>
-      store.dispatch("userModule/addUser", user);
-    const initializeUsers = () => store.dispatch("userModule/initializeUsers");
-
     return {
-      // ...usersRepository(true),
-      createUser,
-      initializeUsers,
-      usersStore: computed(() => store.getters["userModule/getUsers"]),
-      pagesStore: computed(() => store.getters["pageModule/getPages"]),
+      ...usersRepository(store),
+      users: computed((): User[] => usersRepository(store).getUsers()),
     };
   },
   data() {
@@ -71,6 +55,9 @@ export default defineComponent({
     async initializeUsersClick() {
       await this.initializeUsers();
     },
+  },
+  components: {
+    PagesTable,
   },
 });
 </script>
