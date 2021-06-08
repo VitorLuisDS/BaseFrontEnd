@@ -1,7 +1,7 @@
 import { Page } from "@/models/Page";
 import { Module } from "vuex";
 import { State } from "@/store/State"
-interface PageState extends State {
+export interface PageState extends State {
     pages: Page[]
 }
 

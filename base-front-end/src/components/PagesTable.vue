@@ -19,23 +19,20 @@
 import { pagesRepository } from "@/views/compositions/pages-repository";
 import { usersRepository } from "@/views/compositions/users-repository";
 import { computed, defineComponent, onMounted } from "vue";
-import { useStore } from "vuex";
 
 export default defineComponent({
   setup() {
-    const store = useStore();
-
     onMounted(async () => {
-      await pagesRepository(store).initializePages();
+      await pagesRepository().initializePages();
     });
 
     const initializeUsers = async () =>
-      await usersRepository(store).initializeUsers();
+      await usersRepository().initializeUsers();
 
     return {
       initializeUsers,
-      ...pagesRepository(store),
-      pages: computed(() => pagesRepository(store).getPages()),
+      ...pagesRepository(),
+      pages: computed(() => pagesRepository().getPages()),
     };
   },
   name: "PagesTable",

@@ -1,17 +1,17 @@
 import { User } from "@/models/User";
-import { Store } from "vuex";
+import { STORE } from '@/store/index'
 
-export const usersRepository = (store: Store<any>) => {
+export const usersRepository = () => {
     const initializeUsers = async (): Promise<void> => {
-        await store.dispatch("userModule/initializeUsers");
+        await STORE.dispatch("userModule/initializeUsers");
     };
 
     const createUser = async (user: User): Promise<void> => {
-        await store.dispatch("userModule/addUser", user);
+        await STORE.dispatch("userModule/addUser", user);
     };
 
     const getUsers = (): User[] => {
-        return store.getters["userModule/getUsers"];
+        return STORE.getters["userModule/getUsers"];
     };
 
     return {

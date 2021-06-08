@@ -1,17 +1,17 @@
 import { Page } from "@/models/Page";
-import { Store } from "vuex";
+import { STORE } from '@/store/index'
 
-export const pagesRepository = (store: Store<any>) => {
+export const pagesRepository = () => {
     const initializePages = async (): Promise<void> => {
-        await store.dispatch("pageModule/initializePages");
+        await STORE.dispatch("pageModule/initializePages");
     };
 
     const createPage = async (page: Page): Promise<void> => {
-        await store.dispatch("pageModule/addPage", page);
+        await STORE.dispatch("pageModule/addPage", page);
     };
 
     const getPages = (): Page[] => {
-        return store.getters["pageModule/getPages"];
+        return STORE.getters["pageModule/getPages"];
     };
 
     return {

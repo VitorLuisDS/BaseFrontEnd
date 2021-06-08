@@ -1,7 +1,7 @@
 import { User } from "@/models/User";
 import { Module } from "vuex";
 import { State } from "@/store/State"
-interface UserState extends State {
+export interface UserState extends State {
     users: User[]
 }
 

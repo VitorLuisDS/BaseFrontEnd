@@ -28,20 +28,17 @@
 import { computed, defineComponent, onMounted } from "vue";
 import { usersRepository } from "@/views/compositions/users-repository";
 import { User } from "@/models/User";
-import { useStore } from "vuex";
 import PagesTable from "@/components/PagesTable.vue";
 
 export default defineComponent({
   setup() {
-    const store = useStore();
-
     onMounted(async () => {
-      await usersRepository(store).initializeUsers();
+      await usersRepository().initializeUsers();
     });
 
     return {
-      ...usersRepository(store),
-      users: computed((): User[] => usersRepository(store).getUsers()),
+      ...usersRepository(),
+      users: computed((): User[] => usersRepository().getUsers()),
     };
   },
   data() {
