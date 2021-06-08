@@ -35,7 +35,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
-import { usersRepository } from "@/views/compositions/users-repository";
+// import { usersRepository } from "@/views/compositions/users-repository";
 import { User } from "@/models/User";
 import { useStore } from "vuex";
 
@@ -48,8 +48,13 @@ export default defineComponent({
       store.dispatch("pageModule/initializePages");
     });
 
+    const createUser = (user: User) => store.commit("userModule/addUser", user);
+    const initializeUsers = () => store.commit("userModule/initializeUsers");
+
     return {
-      ...usersRepository(true),
+      // ...usersRepository(true),
+      createUser,
+      initializeUsers,
       usersStore: computed(() => store.getters["userModule/getUsers"]),
       pagesStore: computed(() => store.getters["pageModule/getPages"]),
     };
