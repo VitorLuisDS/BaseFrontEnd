@@ -1,7 +1,3 @@
-enum GettersTypesNames {
+export enum GettersTypes {
     GetAll = "GetAll"
-};
-
-export abstract class GettersTypes {
-    public static [GettersTypesNames.GetAll]: string = GettersTypesNames.GetAll;
 };

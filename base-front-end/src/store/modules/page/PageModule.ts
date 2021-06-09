@@ -5,6 +5,7 @@ import { PageState } from "../../states/PageState";
 import { MutationsTypes } from "@/store/abstractions/MutationsTypes";
 import { GettersTypes } from "@/store/abstractions/GettersTypes";
 import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
+import PageModuleMutations from "./PageModuleMutations";
 
 const pageModule: Module<PageState, State> = {
     state: {
@@ -17,18 +18,7 @@ const pageModule: Module<PageState, State> = {
         }
     },
 
-    mutations: {
-        [MutationsTypes.Add](state: PageState, payload: Page) {
-            state.pages.push(payload);
-        },
-        [MutationsTypes.Initialize](state: PageState) {
-            state.pages = [
-                new Page('Home'),
-                new Page('Login'),
-                new Page('About')
-            ];
-        }
-    },
+    mutations: PageModuleMutations,
 
     actions: {
         async [ActionsTypes.AddAsync]({ commit }, payload: Page): Promise<void> {
