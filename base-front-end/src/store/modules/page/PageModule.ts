@@ -2,10 +2,9 @@ import { Page } from "@/models/Page";
 import { Module } from "vuex";
 import { State } from "@/store/abstractions/State"
 import { PageState } from "../../states/PageState";
-import { MutationsTypes } from "@/store/abstractions/MutationsTypes";
 import { GettersTypes } from "@/store/abstractions/GettersTypes";
-import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
 import PageModuleMutations from "./PageModuleMutations";
+import PageModuleActions from "./PageModuleActions";
 
 const pageModule: Module<PageState, State> = {
     state: {
@@ -20,15 +19,8 @@ const pageModule: Module<PageState, State> = {
 
     mutations: PageModuleMutations,
 
-    actions: {
-        async [ActionsTypes.AddAsync]({ commit }, payload: Page): Promise<void> {
-            commit(MutationsTypes.Add, payload);
-        },
+    actions: PageModuleActions,
 
-        async [ActionsTypes.InitializeAsync]({ commit }): Promise<void> {
-            commit(MutationsTypes.Initialize);
-        }
-    },
     namespaced: true
 };
 
