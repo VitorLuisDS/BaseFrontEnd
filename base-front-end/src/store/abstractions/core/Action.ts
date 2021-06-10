@@ -1,5 +1,5 @@
 import { ActionContext } from 'vuex'
-import { ActionsTypes } from '@/store/abstractions/core/types/ActionsTypes';
+import { ActionType } from '@/store/abstractions/core/types/ActionType';
 import { Mutation } from '@/store/abstractions/core/Mutation';
 import { State } from '@/store/abstractions/state';
 
@@ -11,6 +11,6 @@ type ActionAugments = Omit<ActionContext<State, State>, 'commit'> & {
 };
 
 export interface Action<TModel> {
-    [ActionsTypes.AddAsync](context: ActionAugments, payload: TModel): Promise<void>;
-    [ActionsTypes.InitializeAsync](context: ActionAugments): Promise<void>;
+    [ActionType.AddAsync](context: ActionAugments, payload: TModel): Promise<void>;
+    [ActionType.InitializeAsync](context: ActionAugments): Promise<void>;
 };

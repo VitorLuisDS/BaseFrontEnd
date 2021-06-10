@@ -1,12 +1,12 @@
 import { User } from "@/models/User";
-import { Getter } from "@/store/abstractions/Getters";
+import { Getter } from "@/store/abstractions/core/Getter";
 import { State } from "@/store/abstractions/State";
-import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
+import { GetterType } from "@/store/abstractions/core/types/GetterType";
 import { UserState } from "@/store/modules/user/UserState";
 import { GetterTree } from "vuex";
 
 const getters: GetterTree<UserState, State> & Getter<UserState> = {
-    [GettersTypes.GetAll](state: UserState): User[] {
+    [GetterType.GetAll](state: UserState): User[] {
         return state.users ?? [];
     }
 };

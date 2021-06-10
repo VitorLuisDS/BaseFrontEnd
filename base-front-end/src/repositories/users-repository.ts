@@ -1,25 +1,25 @@
 import { User } from "@/models/User";
-import { ActionsTypes } from "@/store/abstractions/core/types/ActionsTypes";
-import { ModulesNames } from "@/store/abstractions/ModulesNames";
+import { ActionType } from "@/store/abstractions/core/types/ActionType";
+import { ModuleName } from "@/store/abstractions/ModuleName";
 import { STORE } from '@/store/index'
 import { UserState } from "@/store/modules/user/UserState";
 import { Store } from "vuex";
-import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
+import { GetterType } from "@/store/abstractions/core/types/GetterType";
 
 export const usersRepository = () => {
     const USERS_STORE = STORE as Store<UserState>;
-    const MODULE_NAME = ModulesNames.UserModule;
+    const MODULE_NAME = ModuleName.UserModule;
 
     const initializeUsers = async (): Promise<void> => {
-        await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionsTypes.InitializeAsync}`);
+        await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionType.InitializeAsync}`);
     };
 
     const createUser = async (user: User): Promise<void> => {
-        await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionsTypes.AddAsync}`, user);
+        await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionType.AddAsync}`, user);
     };
 
     const getUsers = (): User[] => {
-        return USERS_STORE.getters[`${MODULE_NAME}/${GettersTypes.GetAll}`];
+        return USERS_STORE.getters[`${MODULE_NAME}/${GetterType.GetAll}`];
     };
 
     return {

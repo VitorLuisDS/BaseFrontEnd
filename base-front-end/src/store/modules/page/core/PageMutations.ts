@@ -1,14 +1,14 @@
 import { Page } from "@/models/Page";
-import { Mutation } from "@/store/abstractions/Mutation";
-import { MutationsTypes } from "@/store/abstractions/core/types/MutationsTypes";
+import { Mutation } from "@/store/abstractions/core/Mutation";
+import { MutationType } from "@/store/abstractions/core/types/MutationType";
 import { PageState } from "@/store/modules/page/PageState";
 import { MutationTree } from "vuex";
 
 const mutations: MutationTree<PageState> & Mutation<PageState> = {
-    [MutationsTypes.Add](state: PageState, payload: Page) {
+    [MutationType.Add](state: PageState, payload: Page) {
         state.pages.push(payload);
     },
-    [MutationsTypes.Initialize](state: PageState) {
+    [MutationType.Initialize](state: PageState) {
         state.pages = [
             new Page('Home'),
             new Page('Login'),
