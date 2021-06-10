@@ -5,40 +5,21 @@ import { UserState } from "../../states/UserState";
 import { MutationsTypes } from "../../abstractions/MutationsTypes";
 import { GettersTypes } from "@/store/abstractions/GettersTypes";
 import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
+import UserModuleMutations from "./UserModuleMutations";
+import UserModuleActions from "./UserModuleActions";
+import UserModuleGetters from "./UserModuleGetters";
 
 const userModule: Module<UserState, State> = {
     state: {
         users: []
     },
 
-    getters: {
-        [GettersTypes.GetAll](state: UserState): User[] {
-            return state.users ?? [];
-        }
-    },
+    getters: UserModuleGetters,
 
-    mutations: {
-        [MutationsTypes.Add](state: UserState, payload: User) {
-            state.users.push(payload);
-        },
-        [MutationsTypes.Initialize](state: UserState) {
-            state.users = [
-                new User(Math.floor(Math.random() * 100), 'Admin'),
-                new User(Math.floor(Math.random() * 100), 'CEO'),
-                new User(Math.floor(Math.random() * 100), 'Developer')
-            ];
-        }
-    },
+    mutations: UserModuleMutations,
 
-    actions: {
-        async [ActionsTypes.AddAsync]({ commit }, payload: User): Promise<void> {
-            commit(MutationsTypes.Add, payload);
-        },
+    actions: UserModuleActions,
 
-        async [ActionsTypes.InitializeAsync]({ commit }): Promise<void> {
-            commit(MutationsTypes.Initialize);
-        }
-    },
     namespaced: true
 };
 

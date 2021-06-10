@@ -1,3 +1,4 @@
 export enum GettersTypes {
-    GetAll = "GetAll"
+    GetAll = "GetAll",
+    GetById = "GetById"
 };
