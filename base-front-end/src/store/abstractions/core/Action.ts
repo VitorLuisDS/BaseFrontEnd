@@ -1,7 +1,7 @@
 import { ActionContext } from 'vuex'
-import { ActionsTypes } from './ActionsTypes';
-import { Mutation } from './Mutation';
-import { State } from './state';
+import { ActionsTypes } from '@/store/abstractions/core/types/ActionsTypes';
+import { Mutation } from '@/store/abstractions/core/Mutation';
+import { State } from '@/store/abstractions/state';
 
 type ActionAugments = Omit<ActionContext<State, State>, 'commit'> & {
     commit<K extends keyof Mutation<State>>(

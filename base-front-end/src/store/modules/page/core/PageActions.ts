@@ -1,10 +1,10 @@
 import { Page } from "@/models/Page";
-import { Action } from "@/store/abstractions/Action";
-import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
-import { MutationsTypes } from "@/store/abstractions/MutationsTypes";
+import { Action } from "@/store/abstractions/core/Action";
+import { ActionsTypes } from "@/store/abstractions/core/types/ActionsTypes";
 import { State } from "@/store/abstractions/State";
-import { PageState } from "@/store/states/PageState";
+import { PageState } from "@/store/modules/page/PageState";
 import { ActionTree } from "vuex";
+import { MutationsTypes } from "@/store/abstractions/core/types/MutationsTypes";
 
 const actions: ActionTree<PageState, State> & Action<Page> = {
     async [ActionsTypes.AddAsync]({ commit }, payload: Page) {

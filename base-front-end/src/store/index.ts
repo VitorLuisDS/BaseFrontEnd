@@ -1,8 +1,8 @@
 import { createStore } from "vuex";
 import userModule from "@/store/modules/user/UserModule";
 import pageModule from "@/store/modules/page/PageModule";
-import { State } from "./abstractions/State";
-import { ModulesNames } from "./abstractions/ModulesNames";
+import { State } from "@/store/abstractions/State";
+import { ModulesNames } from "@/store/abstractions/ModulesNames";
 
 const modules = {
   [ModulesNames.UserModule]: userModule,

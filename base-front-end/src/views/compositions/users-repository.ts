@@ -1,10 +1,10 @@
 import { User } from "@/models/User";
-import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
-import { GettersTypes } from "@/store/abstractions/GettersTypes";
+import { ActionsTypes } from "@/store/abstractions/core/types/ActionsTypes";
 import { ModulesNames } from "@/store/abstractions/ModulesNames";
 import { STORE } from '@/store/index'
-import { UserState } from "@/store/states/UserState";
+import { UserState } from "@/store/modules/user/UserState";
 import { Store } from "vuex";
+import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
 
 export const usersRepository = () => {
     const USERS_STORE = STORE as Store<UserState>;

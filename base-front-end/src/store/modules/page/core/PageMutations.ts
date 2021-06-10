@@ -1,7 +1,7 @@
 import { Page } from "@/models/Page";
 import { Mutation } from "@/store/abstractions/Mutation";
-import { MutationsTypes } from "@/store/abstractions/MutationsTypes";
-import { PageState } from "@/store/states/PageState";
+import { MutationsTypes } from "@/store/abstractions/core/types/MutationsTypes";
+import { PageState } from "@/store/modules/page/PageState";
 import { MutationTree } from "vuex";
 
 const mutations: MutationTree<PageState> & Mutation<PageState> = {

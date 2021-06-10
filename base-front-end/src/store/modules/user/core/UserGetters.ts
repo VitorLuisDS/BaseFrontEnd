@@ -1,8 +1,8 @@
 import { User } from "@/models/User";
 import { Getter } from "@/store/abstractions/Getters";
-import { GettersTypes } from "@/store/abstractions/GettersTypes";
 import { State } from "@/store/abstractions/State";
-import { UserState } from "@/store/states/UserState";
+import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
+import { UserState } from "@/store/modules/user/UserState";
 import { GetterTree } from "vuex";
 
 const getters: GetterTree<UserState, State> & Getter<UserState> = {

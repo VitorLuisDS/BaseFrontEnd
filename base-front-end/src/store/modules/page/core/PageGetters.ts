@@ -1,8 +1,8 @@
 import { Page } from "@/models/Page";
 import { Getter } from "@/store/abstractions/Getters";
-import { GettersTypes } from "@/store/abstractions/GettersTypes";
 import { State } from "@/store/abstractions/State";
-import { PageState } from "@/store/states/PageState";
+import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
+import { PageState } from "@/store/modules/page/PageState";
 import { GetterTree } from "vuex";
 
 const getters: GetterTree<PageState, State> & Getter<PageState> = {

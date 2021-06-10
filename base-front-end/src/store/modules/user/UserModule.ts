@@ -1,13 +1,9 @@
-import { User } from "@/models/User";
 import { Module } from "vuex";
 import { State } from "@/store/abstractions/State"
-import { UserState } from "../../states/UserState";
-import { MutationsTypes } from "../../abstractions/MutationsTypes";
-import { GettersTypes } from "@/store/abstractions/GettersTypes";
-import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
-import UserModuleMutations from "./UserModuleMutations";
-import UserModuleActions from "./UserModuleActions";
-import UserModuleGetters from "./UserModuleGetters";
+import { UserState } from "@/store/modules/user/UserState";
+import UserModuleMutations from "@/store/modules/user/core/UserMutations";
+import UserModuleActions from "@/store/modules/user/core/UserActions";
+import UserModuleGetters from "@/store/modules/user/core/UserGetters";
 
 const userModule: Module<UserState, State> = {
     state: {

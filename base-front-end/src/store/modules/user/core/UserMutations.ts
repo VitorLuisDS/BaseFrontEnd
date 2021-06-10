@@ -1,7 +1,7 @@
 import { User } from "@/models/User";
 import { Mutation } from "@/store/abstractions/Mutation";
-import { MutationsTypes } from "@/store/abstractions/MutationsTypes";
-import { UserState } from "@/store/states/UserState";
+import { MutationsTypes } from "@/store/abstractions/core/types/MutationsTypes";
+import { UserState } from "@/store/modules/user/UserState";
 import { MutationTree } from "vuex";
 
 const mutations: MutationTree<UserState> & Mutation<UserState> = {

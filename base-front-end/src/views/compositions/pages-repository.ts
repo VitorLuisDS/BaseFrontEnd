@@ -1,10 +1,10 @@
 import { Page } from "@/models/Page";
-import { ActionsTypes } from "@/store/abstractions/ActionsTypes";
-import { GettersTypes } from "@/store/abstractions/GettersTypes";
+import { ActionsTypes } from "@/store/abstractions/core/types/ActionsTypes";
 import { ModulesNames } from "@/store/abstractions/ModulesNames";
 import { STORE } from '@/store/index'
-import { PageState } from "@/store/states/PageState";
+import { PageState } from "@/store/modules/page/PageState";
 import { Store } from "vuex";
+import { GettersTypes } from "@/store/abstractions/core/types/GettersTypes";
 
 export const pagesRepository = () => {
     const PAGE_STORE = STORE as Store<PageState>;
