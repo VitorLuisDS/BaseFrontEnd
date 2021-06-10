@@ -26,7 +26,7 @@
 </template>
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
-import { usersRepository } from "@/views/compositions/users-repository";
+import { usersRepository } from "@/repositories/users-repository";
 import { User } from "@/models/User";
 import PagesTable from "@/components/PagesTable.vue";
 
