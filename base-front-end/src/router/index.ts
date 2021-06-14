@@ -19,7 +19,26 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/Test",
     name: "Test",
-    component:() => import("../views/Test.vue")
+    component: () => import("../views/Test.vue")
+  },
+  {
+    path: "/Login",
+    name: "Login",
+    component: () => import("../views/core/login/Index.vue"),
+    meta: { title: "Login" }
+  },
+  {
+    path: "/not-authorized",
+    name: "NotAuthorized",
+    component: () => import("../views/core/not-authorized/Index.vue"),
+    props: true,
+    meta: { title: "Not Authorized" }
+  },
+  {
+    path: "/:pathMatch(.*)*",
+    name: "NotFound",
+    component: () => import("../views/core/not-found/Index.vue"),
+    meta: { title: "Not Found" }
   }
 ];
 
