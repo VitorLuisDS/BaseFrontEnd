@@ -3,10 +3,12 @@ import userModule from "@/store/modules/user/UserModule";
 import pageModule from "@/store/modules/page/PageModule";
 import { State } from "@/store/abstractions/State";
 import { ModuleName } from "@/store/abstractions/ModuleName";
+import authModule from "./modules/auth/AuthModule";
 
 const modules = {
   [ModuleName.UserModule]: userModule,
-  [ModuleName.PageModule]: pageModule
+  [ModuleName.PageModule]: pageModule,
+  [ModuleName.AuthModule]: authModule
 };
 
 export const STORE = createStore<State>({

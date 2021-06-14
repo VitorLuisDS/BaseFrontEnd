@@ -1,4 +1,5 @@
 export enum ModuleName {
     UserModule = "UserModule",
-    PageModule = "PageModule"
+    PageModule = "PageModule",
+    AuthModule = "AuthModule"
 };

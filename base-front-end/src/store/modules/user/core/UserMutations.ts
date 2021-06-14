@@ -1,10 +1,9 @@
 import { User } from "@/models/User";
-import { Mutation } from "@/store/abstractions/core/Mutation";
 import { MutationType } from "@/store/abstractions/core/types/MutationType";
 import { UserState } from "@/store/modules/user/UserState";
 import { MutationTree } from "vuex";
 
-const mutations: MutationTree<UserState> & Mutation<UserState> = {
+const mutations: MutationTree<UserState> = {
     [MutationType.Add](state: UserState, payload: User) {
         state.users.push(payload);
     },

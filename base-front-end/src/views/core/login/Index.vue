@@ -10,5 +10,10 @@
       <button type="submit">Login</button>
     </div>
   </form>
+  <div>
+    <h3>{{ token?.accessToken }}</h3>
+    <br />
+    <h3>{{ token?.refreshToken }}</h3>
+  </div>
 </template>
 <script src="./script.ts" />
