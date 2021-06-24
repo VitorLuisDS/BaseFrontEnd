@@ -17,13 +17,10 @@ export default defineComponent({
     },
     methods: {
         async login() {
-            // console.log(this.token);
-            // await this.setTokenAsync(new AuthTokens('ola', 'teste'));
-            // console.log(this.token);
             let result = false;
             const response = await baseService.post('https://localhost:44382/api/authentication', { login: this.username, password: this.password });
             console.log(response);
-
+            await this.setTokenAsync(new AuthTokens(response.data.content.access_token));
             const response2 = await baseService.get('https://localhost:44382/WeatherForecast');
             console.log(response2);
 

@@ -10,10 +10,10 @@
       <button type="submit">Login</button>
     </div>
   </form>
-  <div>
-    <h3>{{ token?.accessToken }}</h3>
+  <div style="max-width: 400px">
+    <h3 style="overflow-wrap: break-word">{{ token?.accessToken }}</h3>
     <br />
-    <h3>{{ token?.refreshToken }}</h3>
+    <h3 style="overflow-wrap: break-word">{{ token?.refreshToken }}</h3>
   </div>
 </template>
 <script src="./script.ts" />

@@ -7,7 +7,7 @@ import { AuthGetterType } from "./types/AuthGetterType";
 const getters: GetterTree<AuthState, State> = {
     [AuthGetterType.GetAuthTokens](state: AuthState): AuthTokens | null {
         const authToken = state.authTokens;
-        if (!authToken || !authToken.refreshToken)
+        if (!authToken || !authToken.accessToken)
             return null;
         return state.authTokens;
     }
