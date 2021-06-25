@@ -1,3 +1,3 @@
 export enum AuthGetterType {
-    GetAuthTokens = "GetAuthTokens"
+    GetAccessToken = "GetAccessToken"
 };

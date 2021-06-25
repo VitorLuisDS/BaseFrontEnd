@@ -1,3 +1,4 @@
 export enum AuthActionType {
-    SetTokensAsync = "SetTokensAsync"
+    SetTokenAsync = "SetTokenAsync",
+    ClearTokenAsync = "ClearTokenAsync"
 };

@@ -1,11 +1,13 @@
-import { AuthTokens } from "@/models/security/AuthTokens";
 import { MutationTree } from "vuex";
 import { AuthState } from "../AuthState";
 import { AuthMutationType } from "./types/AuthMutationType";
 
 const mutations: MutationTree<AuthState> = {
-    [AuthMutationType.SetTokens](state: AuthState, payload: AuthTokens) {
-        state.authTokens = payload;
+    [AuthMutationType.SetToken](state: AuthState, payload: string) {
+        state.accessToken = payload;
+    },
+    [AuthMutationType.ClearToken](state: AuthState) {
+        state.accessToken = null;
     }
 };
 

@@ -1,3 +1,4 @@
 export enum AuthMutationType {
-    SetTokens = "SetTokens"
+    SetToken = "SetToken",
+    ClearToken = "ClearToken"
 };

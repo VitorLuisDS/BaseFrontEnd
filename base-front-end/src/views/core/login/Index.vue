@@ -1,5 +1,5 @@
 <template>
-  <form ref="formLogin" v-on:submit.prevent="login">
+  <form ref="formLogin">
     <div>
       <input type="text" placeholder="Username" v-model="username" />
     </div>
@@ -7,13 +7,19 @@
       <input type="password" placeholder="Password" v-model="password" />
     </div>
     <div>
-      <button type="submit">Login</button>
+      <button type="submit" :disabled="loading" @click="login()">Login</button>
+      <button
+        type="button"
+        @click="renewAccessToken()"
+        v-if="token"
+        :disabled="loading"
+      >
+        Renew AccessToken
+      </button>
     </div>
   </form>
   <div style="max-width: 400px">
-    <h3 style="overflow-wrap: break-word">{{ token?.accessToken }}</h3>
-    <br />
-    <h3 style="overflow-wrap: break-word">{{ token?.refreshToken }}</h3>
+    <h3 style="overflow-wrap: break-word">{{ token }}</h3>
   </div>
 </template>
 <script src="./script.ts" />

@@ -1,4 +1,3 @@
-import { AuthTokens } from "@/models/security/AuthTokens";
 import { ModuleName } from "@/store/abstractions/ModuleName";
 import { STORE } from '@/store/index'
 import { AuthState } from "@/store/modules/auth/AuthState";
@@ -11,16 +10,21 @@ export const AuthRepository = () => {
     const AUTH_STORE = STORE as Store<AuthState>;
     const MODULE_NAME = ModuleName.AuthModule;
 
-    const setTokenAsync = async (payload: AuthTokens): Promise<void> => {
-        await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthActionType.SetTokensAsync}`, payload);
+    const setTokenAsync = async (payload: string): Promise<void> => {
+        await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthActionType.SetTokenAsync}`, payload);
     };
 
-    const getAuthTokens = (): AuthTokens => {
-        return AUTH_STORE.getters[`${MODULE_NAME}/${AuthGetterType.GetAuthTokens}`];
+    const clearTokenAsync = async (): Promise<void> => {
+        await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthActionType.ClearTokenAsync}`);
+    };
+
+    const getAuthTokens = (): string => {
+        return AUTH_STORE.getters[`${MODULE_NAME}/${AuthGetterType.GetAccessToken}`];
     };
 
     return {
         setTokenAsync,
-        getAuthTokens
+        clearTokenAsync,
+        getAccessToken: getAuthTokens
     };
 };

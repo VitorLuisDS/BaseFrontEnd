@@ -1,36 +1,50 @@
 import { computed, defineComponent, ref } from "vue";
-import { AuthTokens } from "@/models/security/AuthTokens";
 import { AuthRepository } from "@/repositories/security/AuthRepository";
-import baseService from "@/services/abstraction/base.service";
+import authService from "@/services/auth.service";
+import { User } from "@/models/User";
 
 export default defineComponent({
     setup() {
         const username = ref<string>();
         const password = ref<string>();
+        const loading = ref<boolean>(false);
 
         return {
             ...AuthRepository(),
             username,
             password,
-            token: computed((): AuthTokens => AuthRepository().getAuthTokens())
+            loading,
+            token: computed((): string => AuthRepository().getAccessToken())
         };
     },
     methods: {
         async login() {
+            this.loading = true;
             let result = false;
-            const response = await baseService.post('https://localhost:44382/api/authentication', { login: this.username, password: this.password });
-            console.log(response);
-            await this.setTokenAsync(new AuthTokens(response.data.content.access_token));
-            const response2 = await baseService.get('https://localhost:44382/WeatherForecast');
-            console.log(response2);
 
-            // const response3 = await baseService.post('https://localhost:44382/api/authentication/logout');
-            // console.log(response3);
+            const response = await authService.authenticateAync(new User(undefined, undefined, this.username, this.password));
+            if (response.status == 200) {
+                result = true;
+                await this.setTokenAsync(response.data.content.access_token);
+            }
 
-            // const response4 = await baseService.get('https://localhost:44382/WeatherForecast');
-            // console.log(response4);
+            this.loading = false;
 
-            result = true;
+            if (!result)
+                this.$router.push({ name: "NotAuthorized", params: { message: "User profile not authorized" } });
+        },
+        async renewAccessToken() {
+            this.loading = true;
+            let result = false;
+
+            const response = await authService.authenticateByRefreshTokenAync();
+            if (response.status == 200) {
+                result = true;
+                await this.setTokenAsync(response.data.content.access_token);
+            }
+
+            this.loading = false;
+
             if (!result)
                 this.$router.push({ name: "NotAuthorized", params: { message: "User profile not authorized" } });
         }
