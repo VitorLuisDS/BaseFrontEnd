@@ -1,4 +1,4 @@
-export class Page {
+export class PageTest {
     name: string;
 
     constructor(name: string) {

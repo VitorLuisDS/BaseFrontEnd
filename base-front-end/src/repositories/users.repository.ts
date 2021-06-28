@@ -1,4 +1,4 @@
-import { User } from "@/models/User";
+import { UserTest } from "@/models/UserTest";
 import { ActionType } from "@/store/abstractions/core/types/ActionType";
 import { ModuleName } from "@/store/abstractions/ModuleName";
 import { STORE } from '@/store/index'
@@ -14,11 +14,11 @@ export const usersRepository = () => {
         await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionType.InitializeAsync}`);
     };
 
-    const createUser = async (user: User): Promise<void> => {
+    const createUser = async (user: UserTest): Promise<void> => {
         await USERS_STORE.dispatch(`${MODULE_NAME}/${ActionType.AddAsync}`, user);
     };
 
-    const getUsers = (): User[] => {
+    const getUsers = (): UserTest[] => {
         return USERS_STORE.getters[`${MODULE_NAME}/${GetterType.GetAll}`];
     };
 

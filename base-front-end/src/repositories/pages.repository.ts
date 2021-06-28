@@ -1,4 +1,4 @@
-import { Page } from "@/models/Page";
+import { PageTest } from "@/models/PageTest";
 import { ActionType } from "@/store/abstractions/core/types/ActionType";
 import { ModuleName } from "@/store/abstractions/ModuleName";
 import { STORE } from '@/store/index'
@@ -14,11 +14,11 @@ export const pagesRepository = () => {
         await PAGE_STORE.dispatch(`${MODULE_NAME}/${ActionType.InitializeAsync}`);
     };
 
-    const createPage = async (page: Page): Promise<void> => {
+    const createPage = async (page: PageTest): Promise<void> => {
         await PAGE_STORE.dispatch(`${MODULE_NAME}/${ActionType.AddAsync}`, page);
     };
 
-    const getPages = (): Page[] => {
+    const getPages = (): PageTest[] => {
         return PAGE_STORE.getters[`${MODULE_NAME}/${GetterType.GetAll}`];
     };
 

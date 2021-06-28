@@ -27,7 +27,7 @@
 <script lang="ts">
 import { computed, defineComponent, onMounted } from "vue";
 import { usersRepository } from "@/repositories/users.repository";
-import { User } from "@/models/User";
+import { UserTest } from "@/models/UserTest";
 import PagesTable from "@/components/PagesTable.vue";
 
 export default defineComponent({
@@ -38,7 +38,7 @@ export default defineComponent({
 
     return {
       ...usersRepository(),
-      users: computed((): User[] => usersRepository().getUsers()),
+      users: computed((): UserTest[] => usersRepository().getUsers()),
     };
   },
   data() {
@@ -47,7 +47,7 @@ export default defineComponent({
   name: "Test",
   methods: {
     async createUserClick() {
-      await this.createUser(new User(this.id, this.name));
+      await this.createUser(new UserTest(this.id, this.name));
     },
     async initializeUsersClick() {
       await this.initializeUsers();

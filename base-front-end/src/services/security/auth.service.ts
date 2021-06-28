@@ -1,7 +1,7 @@
-import { baseService } from "./abstractions/base.service";
-import { User } from "@/models/User";
+import { baseService } from "../abstractions/base.service";
 import { authRepository } from "@/repositories/security/auth.repository";
-import { AuthEndpoint } from "./endpoints/AuthEndpoints";
+import { AuthEndpoint } from "../endpoints/AuthEndpoints";
+import { User } from "@/models/security/User";
 
 const axiosInstance = baseService.axiosInstance;
 
