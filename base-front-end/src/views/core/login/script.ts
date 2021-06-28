@@ -7,6 +7,7 @@ export default defineComponent({
     setup() {
         const user = ref<User>(new User());
         const loading = ref<boolean>(false);
+        const invalidUser = ref<boolean>(false);
         const rules = reactive({
             login: [
                 { required: true, message: 'Please input an username', trigger: 'change' },
@@ -31,12 +32,14 @@ export default defineComponent({
             rules,
             user,
             loading,
+            invalidUser,
             token: computed((): string => authRepository().getAccessToken()),
             isValid
         };
     },
     methods: {
         async loginAsync() {
+            this.invalidUser = false;
             if (!(await this.isValid(this.$refs.formLogin)))
                 return;
 
@@ -52,7 +55,7 @@ export default defineComponent({
             this.loading = false;
 
             if (!result)
-                this.$router.push({ name: "NotAuthorized", params: { message: "User profile not authorized" } });
-        }
+                this.invalidUser = true;
+        },
     }
 })

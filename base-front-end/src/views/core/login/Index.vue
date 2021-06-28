@@ -42,6 +42,14 @@
                   </el-form-item>
                 </el-col>
               </el-row>
+              <el-alert
+                v-if="invalidUser"
+                title="Invalid username/password"
+                type="error"
+                center
+                show-icon
+              >
+              </el-alert>
               <el-divider />
               <el-row type="flex" justify="end" class="text-right">
                 <el-col>
