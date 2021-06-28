@@ -1,12 +1,12 @@
 import axios from "axios";
-import { AuthRepository } from "@/repositories/security/AuthRepository";
+import { authRepository } from "@/repositories/security/auth.repository";
 import router from "@/router";
 
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
     function (config) {
-        const accessToken = AuthRepository().getAccessToken();
+        const accessToken = authRepository().getAccessToken();
         if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
         else config.headers.Authorization = "";
 
@@ -28,7 +28,7 @@ axiosInstance.interceptors.response.use(
     },
     async function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
-        if (error.response.status == 401 || error.response.status == 403) await AuthRepository().clearTokenAsync();
+        if (error.response.status == 401 || error.response.status == 403) await authRepository().clearTokenAsync();
         if (error.response.status == 403) {
             router.push({ name: "Login" });
         }
@@ -37,7 +37,7 @@ axiosInstance.interceptors.response.use(
     }
 );
 
-export default {
+export const baseService = {
     axiosInstance,
 
     async get(url: string) {

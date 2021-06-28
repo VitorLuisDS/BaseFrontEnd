@@ -5,7 +5,7 @@ import { AuthActionType } from "@/store/modules/auth/core/types/AuthActionType";
 import { AuthGetterType } from "@/store/modules/auth/core/types/AuthGetterType";
 import { Store } from "vuex";
 
-export const AuthRepository = () => {
+export const authRepository = () => {
 
     const AUTH_STORE = STORE as Store<AuthState>;
     const MODULE_NAME = ModuleName.AuthModule;

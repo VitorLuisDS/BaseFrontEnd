@@ -8,7 +8,7 @@ import authModule from "./modules/auth/AuthModule";
 const modules = {
   [ModuleName.UserModule]: userModule,
   [ModuleName.PageModule]: pageModule,
-  [ModuleName.AuthModule]: authModule
+  [ModuleName.AuthModule]: authModule,
 };
 
 export const STORE = createStore<State>({

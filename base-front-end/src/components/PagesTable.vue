@@ -16,8 +16,8 @@
   <button @click="initializeUsersClick()">Initialize Users</button>
 </template>
 <script lang="ts">
-import { pagesRepository } from "@/repositories/pages-repository";
-import { usersRepository } from "@/repositories/users-repository";
+import { pagesRepository } from "@/repositories/pages.repository";
+import { usersRepository } from "@/repositories/users.repository";
 import { computed, defineComponent, onMounted } from "vue";
 
 export default defineComponent({

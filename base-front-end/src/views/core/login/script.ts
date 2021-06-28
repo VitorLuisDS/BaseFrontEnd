@@ -1,6 +1,6 @@
 import { computed, defineComponent, ref } from "vue";
-import { AuthRepository } from "@/repositories/security/AuthRepository";
-import authService from "@/services/auth.service";
+import { authRepository } from "@/repositories/security/auth.repository";
+import { authService } from "@/services/auth.service";
 import { User } from "@/models/User";
 
 export default defineComponent({
@@ -10,11 +10,11 @@ export default defineComponent({
         const loading = ref<boolean>(false);
 
         return {
-            ...AuthRepository(),
+            ...authRepository(),
             username,
             password,
             loading,
-            token: computed((): string => AuthRepository().getAccessToken())
+            token: computed((): string => authRepository().getAccessToken())
         };
     },
     methods: {
@@ -37,7 +37,7 @@ export default defineComponent({
             this.loading = true;
             let result = false;
 
-            const response = await authService.authenticateByRefreshTokenAync();
+            const response = await authService.renewAccessToken();
             if (response.status == 200) {
                 result = true;
                 await this.setTokenAsync(response.data.content.access_token);
