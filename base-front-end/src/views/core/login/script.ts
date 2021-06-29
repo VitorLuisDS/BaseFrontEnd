@@ -3,6 +3,7 @@ import useFormLoginRules from "./composables/useLoginFormRules";
 import useAuth from "./composables/useAuth";
 
 export default defineComponent({
+    name: "Login",
     setup() {
         return {
             ...useFormLoginRules(),

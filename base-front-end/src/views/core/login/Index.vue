@@ -48,6 +48,7 @@
                 type="error"
                 center
                 show-icon
+                :closable="false"
               >
               </el-alert>
               <el-divider />

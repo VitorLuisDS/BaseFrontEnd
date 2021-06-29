@@ -11,10 +11,10 @@ export default function useAuth() {
     const invalidUser = ref<boolean>(false);
     const formLogin = ref<IForm>();
 
-    const tryAuthenticate = async (user: User): Promise<boolean> => {
+    const tryAuthenticate = async (): Promise<boolean> => {
         let result = false;
 
-        const response = await authService.authenticateAync(user);
+        const response = await authService.authenticateAync(user.value);
         if (response.status == 200) {
             result = true;
             await authRepository().setTokenAsync(response.data.content.access_token);
@@ -30,7 +30,7 @@ export default function useAuth() {
 
         loading.value = true;
 
-        const result = await tryAuthenticate(new User(user.value.login, user.value.password, user.value.stayConnected)).finally(() => {
+        const result = await tryAuthenticate().finally(() => {
             loading.value = false;
         });
 
