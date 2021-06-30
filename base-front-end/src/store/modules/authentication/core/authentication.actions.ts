@@ -4,7 +4,7 @@ import { AuthenticationState } from "../AuthenticationState";
 import { AuthenticationActionType } from "./types/AuthenticationActionType";
 import { AuthenticationMutationType } from "./types/AuthenticationMutationType";
 
-const actions: ActionTree<AuthenticationState, State> = {
+export const authenticationActions: ActionTree<AuthenticationState, State> = {
     async [AuthenticationActionType.SetTokenAsync]({ commit }, payload: string) {
         commit(AuthenticationMutationType.SetToken, payload);
     },
@@ -12,5 +12,3 @@ const actions: ActionTree<AuthenticationState, State> = {
         commit(AuthenticationMutationType.ClearToken);
     }
 };
-
-export default actions;

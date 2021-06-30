@@ -1,5 +1,5 @@
 export enum AuthenticationEndpoint {
-    BaseEndpoint = "api/auth",
-    Authenticate = "api/auth/",
-    RenewAccessToken = "api/auth/renew-access-token"
+    BaseEndpoint = "api/authentication",
+    Authenticate = "api/authentication/",
+    RenewAccessToken = "api/authentication/renew-access-token"
 };

@@ -1,6 +1,6 @@
 import { PageTest } from "@/models/PageTest";
 import { ActionType } from "@/store/abstractions/core/types/ActionType";
-import { ModuleName } from "@/store/abstractions/ModuleName";
+import { ModuleName } from "@/store/abstractions/core/ModuleName";
 import { STORE } from '@/store/index'
 import { PageState } from "@/store/modules/page/PageState";
 import { Store } from "vuex";

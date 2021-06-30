@@ -2,7 +2,7 @@ import { MutationTree } from "vuex";
 import { AuthenticationState } from "../AuthenticationState";
 import { AuthenticationMutationType } from "./types/AuthenticationMutationType";
 
-const mutations: MutationTree<AuthenticationState> = {
+export const authenticationMutations: MutationTree<AuthenticationState> = {
     [AuthenticationMutationType.SetToken](state: AuthenticationState, payload: string) {
         state.accessToken = payload;
     },
@@ -10,5 +10,3 @@ const mutations: MutationTree<AuthenticationState> = {
         state.accessToken = null;
     }
 };
-
-export default mutations;

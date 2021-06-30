@@ -1,4 +1,4 @@
-import { ModuleName } from "@/store/abstractions/ModuleName";
+import { ModuleName } from "@/store/abstractions/core/ModuleName";
 import { STORE } from '@/store/index'
 import { AuthenticationState } from "@/store/modules/authentication/AuthenticationState";
 import { AuthenticationActionType } from "@/store/modules/authentication/core/types/AuthenticationActionType";

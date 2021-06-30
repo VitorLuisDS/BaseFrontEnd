@@ -1,6 +1,7 @@
 import axios from "axios";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import router from "@/router";
+import { ResponseBase } from "@/models/core/ResponseBase";
 
 const axiosInstance = axios.create();
 
@@ -16,8 +17,7 @@ axiosInstance.interceptors.request.use(
     },
     function (error) {
         // Do something with request error
-        // return Promise.reject(error);
-        return error;
+        return Promise.reject(error);
     }
 );
 
@@ -32,27 +32,64 @@ axiosInstance.interceptors.response.use(
         if (error.response.status == 403) {
             router.push({ name: "Login" });
         }
-        // return Promise.reject(error);
-        return error;
+        return Promise.reject(error);
+        // return error;
     }
 );
 
+async function getAsync<T>(url: string): Promise<ResponseBase<T>> {
+    return await axiosInstance
+        .get(url)
+        .then(
+            (successResponse) => {
+                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+            },
+            (error) => {
+                return new ResponseBase<T>(error.response.status, error.response.data.message, error.response.data.content);
+            });
+
+}
+
+async function postAsync<T>(url: string, payload?: any): Promise<ResponseBase<T>> {
+    return await axiosInstance
+        .post(url, payload)
+        .then(
+            (successResponse) => {
+                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+            },
+            (error) => {
+                return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
+            });
+}
+
+async function putAsync<T>(url: string, payload?: any): Promise<ResponseBase<T>> {
+    return await axiosInstance
+        .put(url, payload)
+        .then(
+            (successResponse) => {
+                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+            },
+            (error) => {
+                return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
+            });
+}
+
+async function deleteAsync<T>(url: string): Promise<ResponseBase<T>> {
+    return await axiosInstance
+        .delete(url)
+        .then(
+            (successResponse) => {
+                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+            },
+            (error) => {
+                return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
+            });
+}
+
 export const baseService = {
     axiosInstance,
-
-    async get(url: string) {
-        return await axiosInstance.get(url);
-    },
-
-    async post(url: string, payload?: any) {
-        return await axiosInstance.post(url, payload);
-    },
-
-    async put(url: string, payload?: any) {
-        return await axiosInstance.put(url, payload);
-    },
-
-    async delete(url: string) {
-        return await axiosInstance.delete(url);
-    },
+    getAsync,
+    postAsync,
+    putAsync,
+    deleteAsync
 };

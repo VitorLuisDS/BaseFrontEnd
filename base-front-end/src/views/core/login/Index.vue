@@ -44,7 +44,7 @@
               </el-row>
               <el-alert
                 v-if="invalidUser"
-                title="Invalid username/password"
+                :title="errorMessage"
                 type="error"
                 center
                 show-icon

@@ -1,5 +1,5 @@
 import { FormValidation } from "@/helpers/FormValidation";
-import { IForm } from "@/models/core/IForm";
+import { Form } from "@/models/core/Form";
 import { User } from "@/models/security/User";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import { authenticationService } from "@/services/security/authentication.service";
@@ -9,15 +9,19 @@ export default function useAuth() {
     const user = ref<User>(new User());
     const loading = ref<boolean>(false);
     const invalidUser = ref<boolean>(false);
-    const formLogin = ref<IForm>();
+    const errorMessage = ref<string>();
+    const formLogin = ref<Form>();
 
     const tryAuthenticate = async (): Promise<boolean> => {
         let result = false;
 
         const response = await authenticationService.authenticateAync(user.value);
-        if (response.status == 200) {
+        if (response.statusCode == 200) {
             result = true;
-            await authenticationRepository().setTokenAsync(response.data.content.access_token);
+            await authenticationRepository().setTokenAsync(response.content);
+        }
+        else {
+            errorMessage.value = response.message ?? "Ops, something unexpected happened. Please contact us.";
         }
 
         return result;
@@ -34,8 +38,9 @@ export default function useAuth() {
             loading.value = false;
         });
 
-        if (!result)
+        if (!result) {
             invalidUser.value = true;
+        }
     }
 
     return {
@@ -43,6 +48,7 @@ export default function useAuth() {
         user,
         loading,
         invalidUser,
-        formLogin
+        formLogin,
+        errorMessage
     };
 }

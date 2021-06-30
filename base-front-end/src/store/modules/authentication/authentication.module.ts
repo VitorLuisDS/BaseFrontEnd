@@ -1,20 +1,20 @@
 import { Module } from "vuex";
 import { State } from "@/store/abstractions/State"
 import { AuthenticationState } from "./AuthenticationState";
-import AuthGetters from "./core/AuthenticationGetters";
-import AuthMutations from "./core/AuthenticationMutations";
-import AuthActions from "./core/AuthenticationActions";
+import { authenticationGetters } from "./core/authentication.getters";
+import { authenticationMutations } from "./core/authentication.mutations";
+import { authenticationActions } from "./core/authentication.actions";
 
 const authenticationModule: Module<AuthenticationState, State> = {
     state: {
         accessToken: null
     },
 
-    getters: AuthGetters,
+    getters: authenticationGetters,
 
-    mutations: AuthMutations,
+    mutations: authenticationMutations,
 
-    actions: AuthActions,
+    actions: authenticationActions,
 
     namespaced: true
 };
