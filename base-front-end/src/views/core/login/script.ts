@@ -1,6 +1,6 @@
 import { defineComponent } from "vue";
 import useFormLoginRules from "./composables/useLoginFormRules";
-import useAuth from "./composables/useAuth";
+import useAuth from "./composables/useAuthentication";
 
 export default defineComponent({
     name: "Login",

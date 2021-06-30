@@ -6,6 +6,9 @@ const routes: Array<RouteRecordRaw> = [
     path: "/",
     name: "Home",
     component: Home,
+    meta: {
+      requiresAuth: true
+    }
   },
   {
     path: "/about",
@@ -45,6 +48,14 @@ const routes: Array<RouteRecordRaw> = [
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
   routes,
+});
+
+router.beforeEach((to, from) => {
+  if (to.meta["requiresAuth"]) {
+    return false;
+  } else {
+    return true;
+  }
 });
 
 export default router;

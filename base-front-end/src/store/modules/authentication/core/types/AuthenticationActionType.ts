@@ -1,4 +1,4 @@
-export enum AuthActionType {
+export enum AuthenticationActionType {
     SetTokenAsync = "SetTokenAsync",
     ClearTokenAsync = "ClearTokenAsync"
 };

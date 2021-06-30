@@ -1,8 +1,8 @@
 import { FormValidation } from "@/helpers/FormValidation";
 import { IForm } from "@/models/core/IForm";
 import { User } from "@/models/security/User";
-import { authRepository } from "@/repositories/security/auth.repository";
-import { authService } from "@/services/security/auth.service";
+import { authenticationRepository } from "@/repositories/security/authentication.repository";
+import { authenticationService } from "@/services/security/authentication.service";
 import { ref } from "vue";
 
 export default function useAuth() {
@@ -14,10 +14,10 @@ export default function useAuth() {
     const tryAuthenticate = async (): Promise<boolean> => {
         let result = false;
 
-        const response = await authService.authenticateAync(user.value);
+        const response = await authenticationService.authenticateAync(user.value);
         if (response.status == 200) {
             result = true;
-            await authRepository().setTokenAsync(response.data.content.access_token);
+            await authenticationRepository().setTokenAsync(response.data.content.access_token);
         }
 
         return result;

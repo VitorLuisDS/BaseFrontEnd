@@ -1,3 +1,3 @@
-export enum AuthGetterType {
+export enum AuthenticationGetterType {
     GetAccessToken = "GetAccessToken"
 };
