@@ -1,5 +1,6 @@
 import { FormValidation } from "@/helpers/FormValidation";
 import { Form } from "@/models/core/Form";
+import { StatusCode } from "@/models/core/StatusCode";
 import { User } from "@/models/security/User";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import { authenticationService } from "@/services/security/authentication.service";
@@ -16,7 +17,7 @@ export default function useAuth() {
         let result = false;
 
         const response = await authenticationService.authenticateAync(user.value);
-        if (response.statusCode == 200) {
+        if (response.statusCode == StatusCode.OK) {
             result = true;
             await authenticationRepository().setTokenAsync(response.content);
         }

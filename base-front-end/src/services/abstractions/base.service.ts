@@ -42,10 +42,10 @@ async function getAsync<T>(url: string): Promise<ResponseBase<T>> {
         .get(url)
         .then(
             (successResponse) => {
-                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+                return new ResponseBase<T>(successResponse.data.statusCode, successResponse.data.message, successResponse.data.content);
             },
             (error) => {
-                return new ResponseBase<T>(error.response.status, error.response.data.message, error.response.data.content);
+                return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
             });
 
 }
@@ -55,7 +55,7 @@ async function postAsync<T>(url: string, payload?: any): Promise<ResponseBase<T>
         .post(url, payload)
         .then(
             (successResponse) => {
-                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+                return new ResponseBase<T>(successResponse.data.statusCode, successResponse.data.message, successResponse.data.content);
             },
             (error) => {
                 return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
@@ -67,7 +67,7 @@ async function putAsync<T>(url: string, payload?: any): Promise<ResponseBase<T>>
         .put(url, payload)
         .then(
             (successResponse) => {
-                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+                return new ResponseBase<T>(successResponse.data.statusCode, successResponse.data.message, successResponse.data.content);
             },
             (error) => {
                 return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
@@ -79,7 +79,7 @@ async function deleteAsync<T>(url: string): Promise<ResponseBase<T>> {
         .delete(url)
         .then(
             (successResponse) => {
-                return new ResponseBase<T>(successResponse.status, successResponse.data.message, successResponse.data.content);
+                return new ResponseBase<T>(successResponse.data.statusCode, successResponse.data.message, successResponse.data.content);
             },
             (error) => {
                 return new ResponseBase<T>(error.response.data.statusCode, error.response.data.message, error.response.data.content);
