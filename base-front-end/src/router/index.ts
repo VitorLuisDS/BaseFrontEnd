@@ -1,7 +1,8 @@
-import { ModuleCode } from "@/constants/modules-codes/ModuleCode";
+import { ModuleCode } from "@/constants/ModuleCode";
 import { PageMeta } from "@/constants/page-metas/PageMeta";
-import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
+import { PageCode } from "@/constants/pages-codes/security/PageCode";
 import { PageAuthorizationRequest } from "@/models/security/authorization/PageAuthorizationRequest";
+import { authorizationService } from "@/services/security/authorization.service";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
@@ -27,7 +28,7 @@ const routes: Array<RouteRecordRaw> = [
         meta: {
           [PageMeta.Title]: "Pages",
           [PageMeta.RequiresAuth]: true,
-          [PageMeta.PageCode]: SecurityPageCode.Pages
+          [PageMeta.PageCode]: PageCode.Pages
         },
       }]
     }]
@@ -67,14 +68,21 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from) => {
+router.beforeEach(async (to, from) => {
   if (to.meta[PageMeta.RequiresAuth]) {
-    console.log(
-      new PageAuthorizationRequest(
-        to.meta[PageMeta.ModuleCode] as string,
-        to.meta[PageMeta.PageCode] as string
-      ));
-    return true;
+    const pageAuthorizationRequest = new PageAuthorizationRequest(
+      to.meta[PageMeta.ModuleCode] as ModuleCode,
+      to.meta[PageMeta.PageCode] as PageCode
+    );
+
+    let canAccessPage = false;
+
+    await authorizationService.fillAllowedPageFunctionalitiesAync(pageAuthorizationRequest)
+      .finally(() => {
+        canAccessPage = authorizationService.canAccessCurrentPage();
+      });
+
+    return canAccessPage;
   } else {
     return true;
   }

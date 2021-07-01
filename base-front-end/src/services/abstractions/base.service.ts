@@ -2,6 +2,8 @@ import axios from "axios";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import router from "@/router";
 import { ResponseBase } from "@/models/core/ResponseBase";
+import { StatusCode } from "@/constants/StatusCode";
+import { authenticationService } from "../security/authentication.service";
 
 const axiosInstance = axios.create();
 
@@ -28,10 +30,23 @@ axiosInstance.interceptors.response.use(
     },
     async function (error) {
         // Any status codes that falls outside the range of 2xx cause this function to trigger
-        if (error.response.status == 401 || error.response.status == 403) await authenticationRepository().clearTokenAsync();
-        if (error.response.status == 403) {
-            router.push({ name: "Login" });
+        switch (error.response.status) {
+            case StatusCode.Unauthorized: {
+                await authenticationRepository().clearAccessTokenAsync();
+                router.push({ name: "Login" });
+                return;
+            }
+            case StatusCode.Forbidden: {
+                await authenticationRepository().clearAccessTokenAsync();
+                const response = await authenticationService.renewAccessToken();
+                if (response.statusCode == StatusCode.OK) {
+                    await authenticationRepository().setAccessTokenAsync(response.content.access_token);
+                    return await axiosInstance.request(error.config);
+                }
+                break;
+            }
         }
+
         return Promise.reject(error);
         // return error;
     }

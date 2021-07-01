@@ -3,14 +3,15 @@ import { authenticationRepository } from "@/repositories/security/authentication
 import { AuthenticationEndpoint } from "../endpoints/AuthenticationEndpoints";
 import { User } from "@/models/security/User";
 import { ResponseBase } from "@/models/core/ResponseBase";
+import { AccessToken } from "@/models/security/authentication/AccessToken";
 
 export const authenticationService = {
-    async authenticateAync(user: User): Promise<ResponseBase<string>> {
-        await authenticationRepository().clearTokenAsync();
-        return await baseService.postAsync<string>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthenticationEndpoint.Authenticate}`, user);
+    async authenticateAync(user: User): Promise<ResponseBase<AccessToken>> {
+        await authenticationRepository().clearAccessTokenAsync();
+        return await baseService.postAsync<AccessToken>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthenticationEndpoint.Authenticate}`, user);
     },
 
-    async renewAccessToken(): Promise<ResponseBase<string>> {
-        return await baseService.postAsync<string>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthenticationEndpoint.RenewAccessToken}`);
+    async renewAccessToken(): Promise<ResponseBase<AccessToken>> {
+        return await baseService.postAsync<AccessToken>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthenticationEndpoint.RenewAccessToken}`);
     },
 };

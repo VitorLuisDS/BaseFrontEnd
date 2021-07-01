@@ -6,6 +6,7 @@ import { User } from "@/models/security/User";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import { authenticationService } from "@/services/security/authentication.service";
 import { ref } from "vue";
+import { useRouter } from "vue-router";
 
 export default function useAuth() {
     const user = ref<User>(new User());
@@ -13,6 +14,7 @@ export default function useAuth() {
     const invalidUser = ref<boolean>(false);
     const errorMessage = ref<string>();
     const formLogin = ref<Form>();
+    const router = useRouter();
 
     const tryAuthenticate = async (): Promise<boolean> => {
         let result = false;
@@ -20,7 +22,7 @@ export default function useAuth() {
         const response = await authenticationService.authenticateAync(user.value);
         if (response.statusCode == StatusCode.OK) {
             result = true;
-            await authenticationRepository().setTokenAsync(response.content);
+            await authenticationRepository().setAccessTokenAsync(response.content.access_token);
         }
         else if (response.statusCode == StatusCode.InternalServerError) {
             errorMessage.value = ErrorMessageConstants.SOMETHING_UNEXPECTED_HAPPENED;
@@ -45,7 +47,8 @@ export default function useAuth() {
 
         if (!result) {
             invalidUser.value = true;
-        }
+        } else
+            router.push({ name: "Pages" });
     }
 
     return {

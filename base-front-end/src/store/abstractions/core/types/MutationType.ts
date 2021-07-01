@@ -1,5 +1,6 @@
 export enum MutationType {
     Add = "Add",
     Initialize = "Initialize",
-    SetValue = "SetValue"
+    SetValue = "SetValue",
+    ClearValue = "ClearValue"
 };

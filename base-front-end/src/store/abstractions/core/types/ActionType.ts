@@ -1,6 +1,7 @@
 export enum ActionType {
     AddAsync = "AddAsync",
     InitializeAsync = "InitializeAsync",
-    SetValueAsync = "SetValueAsync"
+    SetValueAsync = "SetValueAsync",
+    ClearValueAsync = "ClearValueAsync"
 };
 

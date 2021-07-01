@@ -7,24 +7,24 @@ import { Store } from "vuex";
 
 export const authenticationRepository = () => {
 
-    const AUTH_STORE = STORE as Store<AuthenticationState>;
+    const AUTHENTICATION_STORE = STORE as Store<AuthenticationState>;
     const MODULE_NAME = ModuleName.AuthenticationModule;
 
-    const setTokenAsync = async (payload: string): Promise<void> => {
-        await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.SetTokenAsync}`, payload);
+    const setAccessTokenAsync = async (payload: string): Promise<void> => {
+        await AUTHENTICATION_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.SetTokenAsync}`, payload);
     };
 
-    const clearTokenAsync = async (): Promise<void> => {
-        await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.ClearTokenAsync}`);
+    const clearAccessTokenAsync = async (): Promise<void> => {
+        await AUTHENTICATION_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.ClearTokenAsync}`);
     };
 
-    const getAuthTokens = (): string => {
-        return AUTH_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetAccessToken}`];
+    const getAccessToken = (): string | null => {
+        return AUTHENTICATION_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetAccessToken}`];
     };
 
     return {
-        setTokenAsync,
-        clearTokenAsync,
-        getAccessToken: getAuthTokens
+        setAccessTokenAsync,
+        clearAccessTokenAsync,
+        getAccessToken
     };
 };
