@@ -8,7 +8,7 @@ import { Store } from "vuex";
 export const authenticationRepository = () => {
 
     const AUTH_STORE = STORE as Store<AuthenticationState>;
-    const MODULE_NAME = ModuleName.AuthModule;
+    const MODULE_NAME = ModuleName.AuthenticationModule;
 
     const setTokenAsync = async (payload: string): Promise<void> => {
         await AUTH_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.SetTokenAsync}`, payload);

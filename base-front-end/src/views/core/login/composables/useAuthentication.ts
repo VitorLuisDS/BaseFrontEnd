@@ -1,7 +1,7 @@
 import { ErrorMessageConstants } from "@/constants/ErrorMessageConstants";
 import { FormValidation } from "@/helpers/FormValidation";
 import { Form } from "@/models/core/Form";
-import { StatusCode } from "@/models/core/StatusCode";
+import { StatusCode } from "@/constants/StatusCode";
 import { User } from "@/models/security/User";
 import { authenticationRepository } from "@/repositories/security/authentication.repository";
 import { authenticationService } from "@/services/security/authentication.service";

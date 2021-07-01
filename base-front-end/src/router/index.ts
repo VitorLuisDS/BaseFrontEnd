@@ -1,14 +1,36 @@
+import { ModuleCode } from "@/constants/modules-codes/ModuleCode";
+import { PageMeta } from "@/constants/page-metas/PageMeta";
+import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
+import { PageAuthorizationRequest } from "@/models/security/authorization/PageAuthorizationRequest";
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
-import Home from "../views/Home.vue";
 
 const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "Home",
-    component: Home,
+    component: () => import("../views/core/home/Index.vue"),
     meta: {
-      requiresAuth: true
-    }
+      [PageMeta.Title]: "Home"
+    },
+    children: [{
+      path: "Security",
+      name: "Security",
+      component: () => import("../views/security/Index.vue"),
+      meta: {
+        [PageMeta.Title]: "Security",
+        [PageMeta.ModuleCode]: ModuleCode.Security
+      },
+      children: [{
+        path: "Pages",
+        name: "Pages",
+        component: () => import("../views/security/pages/Index.vue"),
+        meta: {
+          [PageMeta.Title]: "Pages",
+          [PageMeta.RequiresAuth]: true,
+          [PageMeta.PageCode]: SecurityPageCode.Pages
+        },
+      }]
+    }]
   },
   {
     path: "/about",
@@ -20,28 +42,23 @@ const routes: Array<RouteRecordRaw> = [
       import(/* webpackChunkName: "about" */ "../views/About.vue"),
   },
   {
-    path: "/Test",
-    name: "Test",
-    component: () => import("../views/Test.vue")
-  },
-  {
     path: "/Login",
     name: "Login",
     component: () => import("../views/core/login/Index.vue"),
-    meta: { title: "Login" }
+    meta: { [PageMeta.Title]: "Login" }
   },
   {
     path: "/not-authorized",
     name: "NotAuthorized",
     component: () => import("../views/core/not-authorized/Index.vue"),
     props: true,
-    meta: { title: "Not Authorized" }
+    meta: { [PageMeta.Title]: "Not Authorized" }
   },
   {
     path: "/:pathMatch(.*)*",
     name: "NotFound",
     component: () => import("../views/core/not-found/Index.vue"),
-    meta: { title: "Not Found" }
+    meta: { [PageMeta.Title]: "Not Found" }
   }
 ];
 
@@ -51,8 +68,13 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from) => {
-  if (to.meta["requiresAuth"]) {
-    return false;
+  if (to.meta[PageMeta.RequiresAuth]) {
+    console.log(
+      new PageAuthorizationRequest(
+        to.meta[PageMeta.ModuleCode] as string,
+        to.meta[PageMeta.PageCode] as string
+      ));
+    return true;
   } else {
     return true;
   }

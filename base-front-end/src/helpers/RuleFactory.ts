@@ -1,4 +1,4 @@
-import { Rule } from "./Rule";
+import { Rule } from "../models/async-validator/Rule";
 
 export class RuleFactory {
     static required(message?: string): Rule {

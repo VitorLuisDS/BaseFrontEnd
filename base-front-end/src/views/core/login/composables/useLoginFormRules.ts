@@ -1,4 +1,4 @@
-import { RuleFactory } from "@/models/async-validator/RuleFactory";
+import { RuleFactory } from "@/helpers/RuleFactory";
 import { reactive } from "vue";
 
 export default function useLoginFormRules() {

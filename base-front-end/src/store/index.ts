@@ -1,14 +1,10 @@
 import { createStore } from "vuex";
-import userModule from "@/store/modules/user/user.module";
-import pageModule from "@/store/modules/page/page.module";
 import { State } from "@/store/abstractions/State";
 import { ModuleName } from "@/store/abstractions/core/ModuleName";
 import authenticationModule from "./modules/authentication/authentication.module";
 
 const modules = {
-  [ModuleName.UserModule]: userModule,
-  [ModuleName.PageModule]: pageModule,
-  [ModuleName.AuthModule]: authenticationModule,
+  [ModuleName.AuthenticationModule]: authenticationModule,
 };
 
 export const STORE = createStore<State>({

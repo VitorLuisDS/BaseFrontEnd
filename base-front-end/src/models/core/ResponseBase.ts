@@ -1,4 +1,4 @@
-import { StatusCode } from "./StatusCode";
+import { StatusCode } from "../../constants/StatusCode";
 
 export class ResponseBase<T>{
     statusCode: StatusCode;

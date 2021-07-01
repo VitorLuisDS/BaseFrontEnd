@@ -1,5 +1,3 @@
 export enum ModuleName {
-    UserModule = "UserModule",
-    PageModule = "PageModule",
-    AuthModule = "AuthModule",
+    AuthenticationModule = "AuthenticationModule",
 };
