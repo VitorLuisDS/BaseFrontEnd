@@ -1,3 +1,4 @@
+import { ErrorMessageConstants } from "@/constants/ErrorMessageConstants";
 import { FormValidation } from "@/helpers/FormValidation";
 import { Form } from "@/models/core/Form";
 import { StatusCode } from "@/models/core/StatusCode";
@@ -21,8 +22,11 @@ export default function useAuth() {
             result = true;
             await authenticationRepository().setTokenAsync(response.content);
         }
+        else if (response.statusCode == StatusCode.InternalServerError) {
+            errorMessage.value = ErrorMessageConstants.SOMETHING_UNEXPECTED_HAPPENED;
+        }
         else {
-            errorMessage.value = response.message ?? "Ops, something unexpected happened. Please contact us.";
+            errorMessage.value = response.message;
         }
 
         return result;
