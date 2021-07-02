@@ -1,3 +1,4 @@
 export enum AuthorizationGetterType {
-    GetCurrentPageAuthorization = "GetCurrentPageAuthorization"
+    GetCurrentPageAuthorization = "GetCurrentPageAuthorization",
+    GetNextPage = "GetNextPage"
 };

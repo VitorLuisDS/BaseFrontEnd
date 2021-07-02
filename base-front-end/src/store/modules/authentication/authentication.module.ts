@@ -7,7 +7,8 @@ import { authenticationActions } from "./core/authentication.actions";
 
 const authenticationModule: Module<AuthenticationState, State> = {
     state: {
-        accessToken: null
+        accessToken: null,
+        renewingToken: false
     },
 
     getters: authenticationGetters,

@@ -1,4 +1,6 @@
 export enum AuthorizationActionType {
     SetCurrentPageAuthorizationAsync = "SetCurrentPageAuthorizationAsync",
-    ClearCurrentPageAuthorizationAsync = "ClearCurrentPageAuthorizationAsync"
+    ClearCurrentPageAuthorizationAsync = "ClearCurrentPageAuthorizationAsync",
+    SetNextPageAsync = "SetNextPageAsync",
+    ClearNextPageAsync = "ClearNextPageAsync",
 };

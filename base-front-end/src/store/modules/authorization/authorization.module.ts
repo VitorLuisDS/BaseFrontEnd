@@ -7,7 +7,8 @@ import { authorizationActions } from "./core/authorization.actions";
 
 const authorizationModule: Module<AuthorizationState, State> = {
     state: {
-        currentPageAuthorization: null
+        currentPageAuthorization: null,
+        nextPage: null
     },
 
     getters: authorizationGetters,

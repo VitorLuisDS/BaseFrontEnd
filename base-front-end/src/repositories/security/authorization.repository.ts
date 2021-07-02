@@ -1,3 +1,4 @@
+import { Page } from "@/models/security/authorization/Page";
 import { PageAuthorization } from "@/models/security/authorization/PageAuthorization";
 import { ModuleName } from "@/store/abstractions/core/ModuleName";
 import { STORE } from '@/store/index'
@@ -23,9 +24,24 @@ export const authorizationRepository = () => {
         return AUTHORIZATION_STORE.getters[`${MODULE_NAME}/${AuthorizationGetterType.GetCurrentPageAuthorization}`];
     };
 
+    const getNextPage = (): Page => {
+        return AUTHORIZATION_STORE.getters[`${MODULE_NAME}/${AuthorizationGetterType.GetNextPage}`];
+    };
+
+    const setNextPageAsync = async (payload: Page): Promise<void> => {
+        await AUTHORIZATION_STORE.dispatch(`${MODULE_NAME}/${AuthorizationActionType.SetNextPageAsync}`, payload);
+    };
+
+    const clearNextPageAsync = async (): Promise<void> => {
+        await AUTHORIZATION_STORE.dispatch(`${MODULE_NAME}/${AuthorizationActionType.ClearNextPageAsync}`);
+    };
+
     return {
         setCurrentPageAuthorizationAsync,
         clearCurrentPageAuthorizationAsync,
-        getCurrentPageAuthorization
+        getCurrentPageAuthorization,
+        setNextPageAsync,
+        clearNextPageAsync,
+        getNextPage
     };
 };

@@ -1,3 +1,4 @@
+import { Page } from "@/models/security/authorization/Page";
 import { PageAuthorization } from "@/models/security/authorization/PageAuthorization";
 import { State } from "@/store/abstractions/State";
 import { ActionTree } from "vuex";
@@ -11,5 +12,11 @@ export const authorizationActions: ActionTree<AuthorizationState, State> = {
     },
     async [AuthorizationActionType.ClearCurrentPageAuthorizationAsync]({ commit }) {
         commit(AuthorizationMutationType.ClearCurrentPageAuthorization);
+    },
+    async [AuthorizationActionType.SetNextPageAsync]({ commit }, payload: Page) {
+        commit(AuthorizationMutationType.SetNextPage, payload);
+    },
+    async [AuthorizationActionType.ClearNextPageAsync]({ commit }) {
+        commit(AuthorizationMutationType.ClearNextPage);
     }
 };

@@ -8,5 +8,8 @@ export const authenticationMutations: MutationTree<AuthenticationState> = {
     },
     [AuthenticationMutationType.ClearToken](state: AuthenticationState) {
         state.accessToken = null;
+    },
+    [AuthenticationMutationType.SetRenewingToken](state: AuthenticationState, payload: boolean) {
+        state.renewingToken = payload;
     }
 };

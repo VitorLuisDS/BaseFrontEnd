@@ -1,4 +1,6 @@
 export enum AuthorizationMutationType {
     SetCurrentPageAuthorization = "SetCurrentPageAuthorization",
-    ClearCurrentPageAuthorization = "ClearCurrentPageAuthorization"
+    ClearCurrentPageAuthorization = "ClearCurrentPageAuthorization",
+    SetNextPage = "SetNextPage",
+    ClearNextPage = "ClearNextPage",
 };

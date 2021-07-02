@@ -10,5 +10,8 @@ export const authenticationActions: ActionTree<AuthenticationState, State> = {
     },
     async [AuthenticationActionType.ClearTokenAsync]({ commit }) {
         commit(AuthenticationMutationType.ClearToken);
-    }
+    },
+    async [AuthenticationActionType.SetRenewingTokenAsync]({ commit }, payload: boolean) {
+        commit(AuthenticationMutationType.SetRenewingToken, payload);
+    },
 };

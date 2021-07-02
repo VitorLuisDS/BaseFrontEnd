@@ -22,9 +22,19 @@ export const authenticationRepository = () => {
         return AUTHENTICATION_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetAccessToken}`];
     };
 
+    const setRenewingTokenAsync = async (payload: boolean): Promise<void> => {
+        await AUTHENTICATION_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.SetRenewingTokenAsync}`, payload);
+    };
+
+    const getRenewingToken = (): boolean => {
+        return AUTHENTICATION_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetRenewingToken}`];
+    };
+
     return {
         setAccessTokenAsync,
         clearAccessTokenAsync,
-        getAccessToken
+        getAccessToken,
+        setRenewingTokenAsync,
+        getRenewingToken
     };
 };

@@ -1,3 +1,4 @@
+import { Page } from "@/models/security/authorization/Page";
 import { PageAuthorization } from "@/models/security/authorization/PageAuthorization";
 import { MutationTree } from "vuex";
 import { AuthorizationState } from "../AuthorizationState";
@@ -9,5 +10,11 @@ export const authorizationMutations: MutationTree<AuthorizationState> = {
     },
     [AuthorizationMutationType.ClearCurrentPageAuthorization](state: AuthorizationState) {
         state.currentPageAuthorization = null;
+    },
+    [AuthorizationMutationType.SetNextPage](state: AuthorizationState, payload: Page) {
+        state.nextPage = payload;
+    },
+    [AuthorizationMutationType.ClearNextPage](state: AuthorizationState) {
+        state.nextPage = null;
     }
 };
