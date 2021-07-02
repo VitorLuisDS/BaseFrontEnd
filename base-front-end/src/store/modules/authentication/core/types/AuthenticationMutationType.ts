@@ -1,5 +1,6 @@
 export enum AuthenticationMutationType {
     SetToken = "SetToken",
     ClearToken = "ClearToken",
-    SetRenewingToken = "SetRenewingToken"
+    SetRenewingToken = "SetRenewingToken",
+    SetIsLoginProcess = "SetIsLoginProcess"
 };

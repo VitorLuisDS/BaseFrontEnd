@@ -10,19 +10,21 @@ import { ModuleCode } from "@/constants/ModuleCode";
 import { PageMeta } from "@/constants/page-metas/PageMeta";
 import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
 
+const authorizationRepositoryInstance = authorizationRepository();
+
 export const authorizationService = {
     async fillAllowedPageFunctionalitiesAync(pageAuthorizationRequest: PageAuthorizationRequest): Promise<void> {
-        await authorizationRepository().clearCurrentPageAuthorizationAsync();
+        await authorizationRepositoryInstance.clearCurrentPageAuthorizationAsync();
 
         const response = await baseService.getAsync<PageAuthorization>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthorizationEndpoint.allowedPageFunctionalities(pageAuthorizationRequest)}`);
 
         if (response.statusCode == StatusCode.OK) {
-            await authorizationRepository().setCurrentPageAuthorizationAsync(response.content);
+            await authorizationRepositoryInstance.setCurrentPageAuthorizationAsync(response.content);
         }
     },
 
     canAccessCurrentPage(): boolean {
-        const curentPageAuthorization = authorizationRepository().getCurrentPageAuthorization();
+        const curentPageAuthorization = authorizationRepositoryInstance.getCurrentPageAuthorization();
         if (curentPageAuthorization == null) return false;
 
         const canAccess = curentPageAuthorization.allowedFunctionalities.some(

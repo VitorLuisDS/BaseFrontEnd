@@ -1,30 +1,16 @@
 import axios, { AxiosRequestConfig } from "axios";
-import { authenticationRepository } from "@/repositories/security/authentication.repository";
-import router from "@/router";
 import { ResponseBase } from "@/models/core/ResponseBase";
 import { StatusCode } from "@/constants/StatusCode";
 import { authenticationService } from "../security/authentication.service";
-import { authorizationRepository } from "@/repositories/security/authorization.repository";
 import { InvalidTokenResponse } from "@/models/security/authentication/InvalidTokenResponse";
-import { TokenType } from "@/models/security/authentication/TokenType";
-import { InvalidTokenType } from "@/models/security/authentication/InvalidTokenType";
+import { baseServiceHelpers } from "./base.service.helpers";
 
 const axiosInstance = axios.create();
 
 axiosInstance.interceptors.request.use(
     async function (config) {
-        let accessToken = authenticationRepository().getAccessToken();
 
-        const isRenewingToken = await authenticationRepository().getRenewingToken();
-        if (!accessToken && !isRenewingToken) {
-            await authenticationRepository().setRenewingTokenAsync(true);
-            await authenticationService.renewAccessTokenAsync();
-            accessToken = authenticationRepository().getAccessToken();
-            await authenticationRepository().setRenewingTokenAsync(false);
-        }
-        if (accessToken) config.headers.Authorization = `Bearer ${accessToken}`;
-        else config.headers.Authorization = "";
-
+        config.headers.Authorization = await baseServiceHelpers.getAuthorizationHeader();
         config.withCredentials = true;
 
         return config;
@@ -44,46 +30,21 @@ axiosInstance.interceptors.response.use(
         // Any status codes that falls outside the range of 2xx cause this function to trigger
         switch (error.response.status) {
             case StatusCode.Unauthorized: {
+                let userNeedsToLogin = false;
                 const invalidTokenResponse = error.response.data.content as InvalidTokenResponse;
 
-                if (invalidTokenResponse) {
-                    if (invalidTokenResponse.tokenType == TokenType.AccessToken && (
-                        invalidTokenResponse.invalidTokenType == InvalidTokenType.Expired ||
-                        invalidTokenResponse.invalidTokenType == InvalidTokenType.NotProvided)) {
-                        await authenticationRepository().clearAccessTokenAsync();
-                        const response = await authenticationService.renewAccessTokenAsync();
-                        if (response.statusCode == StatusCode.OK) {
-                            await authenticationRepository().setAccessTokenAsync(response.content.access_token);
-                            return await axiosInstance.request(error.config);
-                        } else {
-                            await authenticationRepository().clearAccessTokenAsync();
-                            const nextPage = authorizationRepository().getNextPage();
-                            if (nextPage)
-                                await router.push({ name: "Login", query: { redirect: nextPage.pageCode } });
-                            else
-                                await router.push({ name: "Login" });
-                            return;
-                        }
-                    }
-                    else {
-                        await authenticationRepository().clearAccessTokenAsync();
-                        const nextPage = authorizationRepository().getNextPage();
-                        if (nextPage)
-                            await router.push({ name: "Login", query: { redirect: nextPage.pageCode } });
-                        else
-                            await router.push({ name: "Login" });
-                        return;
-                    }
+                if (invalidTokenResponse && baseServiceHelpers.shouldTheAccessTokenBeRenewed(invalidTokenResponse)) {
+                    await authenticationService.renewAccessTokenAsync()
+                        .then(
+                            async () => {
+                                return await axiosInstance.request(error.config);
+                            },
+                            () => userNeedsToLogin = true);
                 }
-                else {
-                    await authenticationRepository().clearAccessTokenAsync();
-                    const nextPage = authorizationRepository().getNextPage();
-                    if (nextPage)
-                        await router.push({ name: "Login", query: { redirect: nextPage.pageCode } });
-                    else
-                        await router.push({ name: "Login" });
-                    return;
-                }
+                else
+                    userNeedsToLogin = true;
+                if (userNeedsToLogin) { await baseServiceHelpers.goToLogin(); return; }
+                break;
             }
         }
 

@@ -14,4 +14,7 @@ export const authenticationActions: ActionTree<AuthenticationState, State> = {
     async [AuthenticationActionType.SetRenewingTokenAsync]({ commit }, payload: boolean) {
         commit(AuthenticationMutationType.SetRenewingToken, payload);
     },
+    async [AuthenticationActionType.SetIsLoginProcessAsync]({ commit }, payload: boolean) {
+        commit(AuthenticationMutationType.SetIsLoginProcess, payload);
+    },
 };

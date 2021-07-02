@@ -9,5 +9,8 @@ export const authenticationGetters: GetterTree<AuthenticationState, State> = {
     },
     [AuthenticationGetterType.GetRenewingToken](state: AuthenticationState): boolean {
         return state.renewingToken;
+    },
+    [AuthenticationGetterType.GetIsLoginProcess](state: AuthenticationState): boolean {
+        return state.isLoginProcess;
     }
 };

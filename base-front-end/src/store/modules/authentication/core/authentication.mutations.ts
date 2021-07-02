@@ -11,5 +11,8 @@ export const authenticationMutations: MutationTree<AuthenticationState> = {
     },
     [AuthenticationMutationType.SetRenewingToken](state: AuthenticationState, payload: boolean) {
         state.renewingToken = payload;
+    },
+    [AuthenticationMutationType.SetIsLoginProcess](state: AuthenticationState, payload: boolean) {
+        state.isLoginProcess = payload;
     }
 };

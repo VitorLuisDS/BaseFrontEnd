@@ -30,11 +30,21 @@ export const authenticationRepository = () => {
         return AUTHENTICATION_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetRenewingToken}`];
     };
 
+    const setIsLoginProcessAsync = async (payload: boolean): Promise<void> => {
+        await AUTHENTICATION_STORE.dispatch(`${MODULE_NAME}/${AuthenticationActionType.SetIsLoginProcessAsync}`, payload);
+    };
+
+    const getIsLoginProcess = (): boolean => {
+        return AUTHENTICATION_STORE.getters[`${MODULE_NAME}/${AuthenticationGetterType.GetIsLoginProcess}`];
+    };
+
     return {
         setAccessTokenAsync,
         clearAccessTokenAsync,
         getAccessToken,
         setRenewingTokenAsync,
-        getRenewingToken
+        getRenewingToken,
+        setIsLoginProcessAsync,
+        getIsLoginProcess
     };
 };
