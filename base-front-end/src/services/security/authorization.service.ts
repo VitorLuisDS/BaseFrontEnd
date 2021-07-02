@@ -5,6 +5,10 @@ import { PageAuthorizationRequest } from "@/models/security/authorization/PageAu
 import { PageAuthorization } from "@/models/security/authorization/PageAuthorization";
 import { StatusCode } from "@/constants/StatusCode";
 import { FunctionalityCode } from "@/constants/FunctionalityCode";
+import { RouteLocationNormalized } from "vue-router";
+import { ModuleCode } from "@/constants/ModuleCode";
+import { PageMeta } from "@/constants/page-metas/PageMeta";
+import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
 
 export const authorizationService = {
     async fillAllowedPageFunctionalitiesAync(pageAuthorizationRequest: PageAuthorizationRequest): Promise<void> {
@@ -21,9 +25,27 @@ export const authorizationService = {
         const curentPageAuthorization = authorizationRepository().getCurrentPageAuthorization();
         if (curentPageAuthorization == null) return false;
 
-        const canAccess = curentPageAuthorization.allowedFunctionalities.some((functionality) =>
-            functionality == FunctionalityCode.Consult
+        const canAccess = curentPageAuthorization.allowedFunctionalities.some(
+            (functionality) =>
+                functionality == FunctionalityCode.Consult
         );
         return canAccess;
+    },
+
+    async authorizeUserToPageAsync(page: RouteLocationNormalized): Promise<boolean> {
+        const pageAuthorizationRequest = new PageAuthorizationRequest(
+            page.meta[PageMeta.ModuleCode] as ModuleCode,
+            page.meta[PageMeta.PageCode] as SecurityPageCode
+        );
+
+        let canAccessPage = false;
+
+        await this.fillAllowedPageFunctionalitiesAync(pageAuthorizationRequest)
+            .finally(
+                () => {
+                    canAccessPage = this.canAccessCurrentPage();
+                });
+
+        return canAccessPage;
     }
 };

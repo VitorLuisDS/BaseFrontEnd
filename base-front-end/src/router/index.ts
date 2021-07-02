@@ -1,9 +1,13 @@
 import { ModuleCode } from "@/constants/ModuleCode";
 import { PageMeta } from "@/constants/page-metas/PageMeta";
-import { PageCode } from "@/constants/pages-codes/security/PageCode";
-import { PageAuthorizationRequest } from "@/models/security/authorization/PageAuthorizationRequest";
+import { CorePageCode } from "@/constants/pages-codes/core/CorePageCodes";
+import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
+import { CorePageTitle } from "@/constants/pages-titles/core/CorePageTitle";
+import { SecurityPageTitle } from "@/constants/pages-titles/security/SecurityPageTitle";
+import { Page } from "@/models/security/authorization/Page";
+import { authorizationRepository } from "@/repositories/security/authorization.repository";
 import { authorizationService } from "@/services/security/authorization.service";
-import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { createRouter, createWebHistory, RouteLocationNormalized, RouteRecordRaw } from "vue-router";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -15,53 +19,53 @@ const routes: Array<RouteRecordRaw> = [
     },
     children: [{
       path: "Security",
-      name: "Security",
+      name: ModuleCode.Security,
       component: () => import("../views/security/Index.vue"),
       meta: {
-        [PageMeta.Title]: "Security",
-        [PageMeta.ModuleCode]: ModuleCode.Security
+        [PageMeta.Title]: SecurityPageTitle.SecurityHome,
+        [PageMeta.ModuleCode]: ModuleCode.Security,
+        [PageMeta.RequiresAuth]: true,
+        [PageMeta.PageCode]: SecurityPageCode.SecurityHome
       },
       children: [{
         path: "Pages",
-        name: "Pages",
+        name: SecurityPageCode.Pages,
         component: () => import("../views/security/pages/Index.vue"),
         meta: {
-          [PageMeta.Title]: "Pages",
+          [PageMeta.Title]: SecurityPageTitle.Pages,
           [PageMeta.RequiresAuth]: true,
-          [PageMeta.PageCode]: PageCode.Pages
+          [PageMeta.PageCode]: SecurityPageCode.Pages
         },
       }]
     }]
   },
   {
-    path: "/about",
-    name: "About",
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/About.vue"),
-  },
-  {
     path: "/Login",
-    name: "Login",
+    name: CorePageCode.Login,
     component: () => import("../views/core/login/Index.vue"),
-    meta: { [PageMeta.Title]: "Login" }
+    meta: { [PageMeta.Title]: CorePageTitle.Login }
   },
   {
     path: "/not-authorized",
-    name: "NotAuthorized",
+    name: CorePageCode.NotAuthorized,
     component: () => import("../views/core/not-authorized/Index.vue"),
     props: true,
-    meta: { [PageMeta.Title]: "Not Authorized" }
+    meta: { [PageMeta.Title]: CorePageTitle.NotAuthorized }
   },
   {
     path: "/:pathMatch(.*)*",
-    name: "NotFound",
+    name: CorePageCode.NotFound,
     component: () => import("../views/core/not-found/Index.vue"),
-    meta: { [PageMeta.Title]: "Not Found" }
+    meta: { [PageMeta.Title]: CorePageTitle.NotFound }
   }
 ];
+
+function getPageFromRoute(to: RouteLocationNormalized): Page {
+  return {
+    moduleCode: to.meta[PageMeta.ModuleCode] as ModuleCode,
+    pageCode: to.meta[PageMeta.PageCode] as SecurityPageCode
+  }
+}
 
 const router = createRouter({
   history: createWebHistory(process.env.BASE_URL),
@@ -70,22 +74,10 @@ const router = createRouter({
 
 router.beforeEach(async (to, from) => {
   if (to.meta[PageMeta.RequiresAuth]) {
-    const pageAuthorizationRequest = new PageAuthorizationRequest(
-      to.meta[PageMeta.ModuleCode] as ModuleCode,
-      to.meta[PageMeta.PageCode] as PageCode
-    );
-
-    let canAccessPage = false;
-
-    await authorizationService.fillAllowedPageFunctionalitiesAync(pageAuthorizationRequest)
-      .finally(() => {
-        canAccessPage = authorizationService.canAccessCurrentPage();
-      });
-
-    return canAccessPage;
-  } else {
-    return true;
+    await authorizationRepository().setNextPageAsync(getPageFromRoute(to));
+    return await authorizationService.authorizeUserToPageAsync(to);
   }
+  return true;
 });
 
 export default router;

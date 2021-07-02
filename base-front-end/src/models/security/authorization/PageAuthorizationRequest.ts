@@ -1,11 +1,12 @@
 import { ModuleCode } from "@/constants/ModuleCode";
-import { PageCode } from "@/constants/pages-codes/security/PageCode";
+import { SecurityPageCode } from "@/constants/pages-codes/security/SecurityPageCode";
+import { Page } from "./Page";
 
-export class PageAuthorizationRequest {
+export class PageAuthorizationRequest implements Page {
     moduleCode: ModuleCode;
-    pageCode: PageCode;
+    pageCode: SecurityPageCode;
 
-    constructor(moduleCode: ModuleCode, pageCode: PageCode) {
+    constructor(moduleCode: ModuleCode, pageCode: SecurityPageCode) {
         this.moduleCode = moduleCode;
         this.pageCode = pageCode;
     }
