@@ -23,7 +23,7 @@ export const authenticationService = {
         await baseService.postAsync<AccessToken>(`${process.env.VUE_APP_API_ENDPOINT}/${AuthenticationEndpoint.RenewAccessToken}`)
             .then(
                 async (response) => {
-                    await authenticationRepositoryInstance.setAccessTokenAsync(response.content.access_token);
+                    await authenticationRepositoryInstance.setAccessTokenAsync(response.content.accessToken);
                 },
                 (reason) => Promise.reject(reason))
             .finally(async () => {

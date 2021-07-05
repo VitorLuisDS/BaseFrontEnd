@@ -24,7 +24,7 @@ export default function useAuth() {
         switch (response.statusCode) {
             case StatusCode.OK: {
                 result = true;
-                await authenticationRepository().setAccessTokenAsync(response.content.access_token);
+                await authenticationRepository().setAccessTokenAsync(response.content.accessToken);
                 break;
             }
             case (StatusCode.InternalServerError): {

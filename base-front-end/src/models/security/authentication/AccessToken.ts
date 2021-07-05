@@ -1,7 +1,7 @@
 export class AccessToken {
-    access_token: string;
+    accessToken: string;
 
     constructor(accessToken: string) {
-        this.access_token = accessToken;
+        this.accessToken = accessToken;
     }
 };
